@@ -21,15 +21,22 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
+    @Column(nullable = false)
     private String name;
 
-    @Column
+    @Column(nullable = false)
     private Integer rank;
 
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Player> players = new HashSet<>();
 
+    public Team() {
+    }
+
+    public Team(String name, Integer rank) {
+        this.name = name;
+        this.rank = rank;
+    }
 
     public Integer getId() {
         return id;

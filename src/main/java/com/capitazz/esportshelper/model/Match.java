@@ -28,11 +28,11 @@ public class Match {
     private Integer id;
 
     @OneToOne
-    @JoinColumn(name = "winning_team_id", foreignKey = @ForeignKey(name = "winning_team_id_fkey"))
+    @JoinColumn(name = "winning_team_id", nullable = false, foreignKey = @ForeignKey(name = "winning_team_id_fkey"))
     private Team winningTeam;
 
     @OneToOne
-    @JoinColumn(name = "losing_team_id", foreignKey = @ForeignKey(name = "losing_team_id_fkey"))
+    @JoinColumn(name = "losing_team_id", nullable = false, foreignKey = @ForeignKey(name = "losing_team_id_fkey"))
     private Team losingTeam;
 
     @Column(nullable = false)
@@ -50,9 +50,11 @@ public class Match {
         joinColumns = {@JoinColumn(name = "match_id", referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "match_id_fkey"))})
     @MapKeyColumn(name = "player_name")
-    @Column(name = "score")
+    @Column(name = "score", nullable = false)
     private Map<String, String> playerScore;
 
+    public Match() {
+    }
 
     public Integer getId() {
         return id;

@@ -19,13 +19,15 @@ public class Player {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
+    @Column(nullable = false)
     private String nickname;
 
     @ManyToOne
     @JoinColumn(name = "team_id", foreignKey = @ForeignKey(name = "team_id_fkey"))
     private Team team;
 
+    public Player() {
+    }
 
     public Integer getId() {
         return id;
