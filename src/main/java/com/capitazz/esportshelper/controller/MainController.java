@@ -1,9 +1,9 @@
 package com.capitazz.esportshelper.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,9 +23,11 @@ public class MainController {
     }
 
     @GetMapping
-    public String main(Map<String, Object> model) {
-        List<Team> teams = teamService.getAll();
-        model.put("teams", teams);
+    public String main(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
+        List<Team> teams = teamService.getByFilter(filter);
+
+        model.addAttribute("teams", teams);
+        model.addAttribute("filter", filter);
 
         return "main";
     }
@@ -35,13 +37,5 @@ public class MainController {
         teamService.save(team);
 
         return "redirect:/main";
-    }
-
-    @PostMapping("/filter")
-    public String filterTeam(@RequestParam String filter, Map<String, Object> model) {
-        List<Team> teams = teamService.getByFilter(filter);
-        model.put("teams", teams);
-
-        return "main";
     }
 }
