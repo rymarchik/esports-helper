@@ -30,27 +30,36 @@ public class Team {
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Player> players = new HashSet<>();
 
-    public Team() {
-    }
-
-    public Team(String name, Integer rank) {
-        this.name = name;
-        this.rank = rank;
-    }
 
     public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Integer getRank() {
         return rank;
     }
 
+    public void setRank(Integer rank) {
+        this.rank = rank;
+    }
+
     public Set<Player> getPlayers() {
         return players;
+    }
+
+    public void setPlayers(Set<Player> players) {
+        this.players = players;
     }
 }

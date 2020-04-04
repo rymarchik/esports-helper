@@ -1,8 +1,14 @@
 <html>
 <body>
 
+<form method="post" action="/logout">
+    <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+    <input type="submit" value="Sign Out"/>
+</form>
+
 <div>
-    <form method="post">
+    <form method="post" action="/main">
+        <input type="hidden" name="_csrf" value="{{_csrf.token}}">
         <input type="text" name="name" placeholder="Введите название команды">
         <input type="number" name="rank" placeholder="Введите ранк команды">
         <button type="submit">Добавить</button>
@@ -13,7 +19,8 @@
     <div>Список команд:</div>
 
     <div>
-        <form method="post" action="/filter">
+        <form method="post" action="/main/filter">
+            <input type="hidden" name="_csrf" value="{{_csrf.token}}">
             <input type="text" name="filter">
             <button type="submit">Найти</button>
         </form>
