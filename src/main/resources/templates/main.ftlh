@@ -3,6 +3,7 @@
 
 <@c.page>
     <@l.logout/>
+    <a href="/user">Manage users</a>
 
     <div>
         <form method="post" action="/main">
