@@ -4,6 +4,7 @@
 <@c.page>
     <@l.logout/>
     <a href="/user">Manage users</a>
+    <a href="/account">Account settings</a>
 
     <div>
         <form method="post" action="/main">
