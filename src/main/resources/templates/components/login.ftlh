@@ -14,6 +14,14 @@
                 <input type="password" class="form-control" name="password">
             </div>
         </div>
+        <#if isRegisterForm>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Email</label>
+                <div class="col-sm-5">
+                    <input type="email" class="form-control" name="email">
+                </div>
+            </div>
+        </#if>
 
         <div class="form-group row">
             <div class="col-sm-2">

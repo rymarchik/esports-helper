@@ -1,46 +1,49 @@
 package com.capitazz.esportshelper.controller;
 
-import java.util.Collections;
-import java.util.Map;
-
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.capitazz.esportshelper.model.security.Role;
 import com.capitazz.esportshelper.model.security.User;
-import com.capitazz.esportshelper.repository.UserRepository;
+import com.capitazz.esportshelper.service.UserService;
 
 @Controller
-@RequestMapping("/registration")
 public class RegistrationController {
 
-    private UserRepository userRepository;
+    private UserService userService;
 
-    public RegistrationController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public RegistrationController(UserService userService) {
+        this.userService = userService;
     }
 
-    @GetMapping
+    @GetMapping("/registration")
     public String registration() {
         return "registration";
     }
 
-    @PostMapping
-    public String registerUser(User user, Map<String, Object> model) {
-        User userFromDb = userRepository.findByUsername(user.getUsername());
-
-        if (userFromDb != null) {
-            model.put("errorMessage", "User exists!");
+    @PostMapping("/registration")
+    public String registerUser(User user, Model model) {
+        if (!userService.addUser(user)) {
+            model.addAttribute("message", "User exists!");
             return "registration";
         }
-
-        user.setActive(true);
-        user.setRoles(Collections.singleton(Role.USER));
-        userRepository.save(user);
 
         return "redirect:/login";
     }
 
+    @GetMapping("/activate/{code}")
+    public String activate(@PathVariable String code, Model model) {
+        boolean isActivated = userService.activateUser(code);
+
+        if (isActivated) {
+            model.addAttribute("message", "Verification successful!");
+        }
+        else {
+            model.addAttribute("message", "Activation code is not found!");
+        }
+
+        return "login";
+    }
 }
