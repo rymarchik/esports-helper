@@ -13,29 +13,29 @@ import com.capitazz.esportshelper.model.Team;
 import com.capitazz.esportshelper.service.TeamService;
 
 @Controller
-@RequestMapping("/main")
-public class MainController {
+@RequestMapping("/teams")
+public class TeamController {
 
     private TeamService teamService;
 
-    public MainController(TeamService teamService) {
+    public TeamController(TeamService teamService) {
         this.teamService = teamService;
     }
 
     @GetMapping
-    public String main(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
+    public String teamList(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
         List<Team> teams = teamService.getByFilter(filter);
 
         model.addAttribute("teams", teams);
         model.addAttribute("filter", filter);
 
-        return "main";
+        return "teamList";
     }
 
     @PostMapping
     public String addTeam(Team team) {
         teamService.save(team);
 
-        return "redirect:/main";
+        return "redirect:/teams";
     }
 }

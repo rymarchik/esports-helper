@@ -2,7 +2,7 @@
 <#import "components/login.ftlh" as l>
 
 <@c.page>
-    <h2>New user</h2>
+    <div class="mb-10"><h3>New user</h3></div>
     ${errorMessage!}
-    <@l.login "/registration" "Sign up"/>
+    <@l.loginForm "/registration" true/>
 </@c.page>

@@ -3,6 +3,6 @@
 <@c.page>
 <div>
     <h1>Welcome! Ready to rob bookies?</h1>
-    <h2>Click <a href="/main">here</a> to login and let's go!</h2>
+    <h2>Use legal way to do that, use stats!</h2>
 </div>
 </@c.page>
