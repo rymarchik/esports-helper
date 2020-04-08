@@ -2,6 +2,7 @@ plugins {
 	id 'com.moowork.node' version '1.3.1'
 	id 'org.springframework.boot' version '2.2.2.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+	id "org.flywaydb.flyway" version "6.3.3"
 	id 'java'
 }
 
@@ -24,5 +25,6 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 
+	runtime 'org.flywaydb:flyway-core'
 	runtime 'org.postgresql:postgresql'
 }

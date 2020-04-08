@@ -25,7 +25,7 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public String registerUser(User user, Model model) {
-        if (!userService.addUser(user)) {
+        if (!userService.registerUser(user)) {
             model.addAttribute("message", "User exists!");
             return "registration";
         }
@@ -34,7 +34,7 @@ public class RegistrationController {
     }
 
     @GetMapping("/activate/{code}")
-    public String activate(@PathVariable String code, Model model) {
+    public String activateUser(@PathVariable String code, Model model) {
         boolean isActivated = userService.activateUser(code);
 
         if (isActivated) {

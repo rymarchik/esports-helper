@@ -1,12 +1,20 @@
 package com.capitazz.esportshelper.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.capitazz.esportshelper.model.security.Role;
 import com.capitazz.esportshelper.model.security.User;
@@ -18,8 +26,11 @@ import com.capitazz.esportshelper.repository.UserRepository;
 @Service
 public class UserService implements UserDetailsService {
 
-    private final UserRepository userRepository;
-    private final MailService mailService;
+    @Value("${upload.path}")
+    private String uploadPath;
+
+    private UserRepository userRepository;
+    private MailService mailService;
 
     public UserService(UserRepository userRepository, MailService mailService) {
         this.userRepository = userRepository;
@@ -31,7 +42,11 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsername(username);
     }
 
-    public boolean addUser(User user) {
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    public boolean registerUser(User user) {
         User userFromDb = loadUserByUsername(user.getUsername());
 
         if (userFromDb != null) {
@@ -45,6 +60,19 @@ public class UserService implements UserDetailsService {
         sendActivationCode(user);
 
         return true;
+    }
+
+    private void sendActivationCode(User user) {
+        String message = String.format(
+            "Hello %s,\n" +
+                "Welcome to esports-helper!\n\n" +
+                "Please, verify your email by clicking the following link:\n" +
+                "http://localhost:8989/activate/%s",
+            user.getUsername(),
+            user.getActivationCode()
+        );
+
+        mailService.send(user.getEmail(), "Activation Code", message);
     }
 
     public boolean activateUser(String code) {
@@ -61,18 +89,53 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
-    private void sendActivationCode(User user) {
-        if (!StringUtils.isEmpty(user.getEmail())) {
-            String message = String.format(
-                "Hello %s,\n" +
-                    "Welcome to esports-helper!\n\n" +
-                    "Please, verify your email by clicking the following link:\n" +
-                    "http://localhost:8989/activate/%s",
-                user.getUsername(),
-                user.getActivationCode()
-            );
+    public void updateUserProfile(User user, MultipartFile avatar, String username, String password, String email)
+        throws IOException {
 
-            mailService.send(user.getEmail(), "Activation Code", message);
+        if (!avatar.getOriginalFilename().isEmpty()) {
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir();
+            }
+            String uploadFilename = UUID.randomUUID().toString() + "-" + avatar.getOriginalFilename();
+            avatar.transferTo(new File(uploadPath + "/" + uploadFilename));
+            user.setAvatar(uploadFilename);
         }
+
+        if (!username.isEmpty()) {
+            user.setUsername(username);
+        }
+        if (!password.isEmpty()) {
+            user.setPassword(password);
+        }
+
+        boolean isEmailChanged = !email.isEmpty() && !email.equals(user.getEmail());
+        if (isEmailChanged) {
+            user.setEmail(email);
+            user.setActive(false);
+            user.setActivationCode(UUID.randomUUID().toString());
+        }
+
+        userRepository.save(user);
+
+        if (isEmailChanged) {
+            sendActivationCode(user);
+        }
+    }
+
+    public void updateUserRoles(User user, String username, Map<String, String> form) {
+        Set<String> stringRoles = Arrays.stream(Role.values())
+            .map(Role::name)
+            .collect(Collectors.toSet());
+
+        stringRoles.retainAll(form.keySet());
+
+        Set<Role> roles = stringRoles.stream()
+            .map(Role::valueOf)
+            .collect(Collectors.toSet());
+
+        user.setUsername(username);
+        user.setRoles(roles);
+        userRepository.save(user);
     }
 }

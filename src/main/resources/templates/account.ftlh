@@ -4,11 +4,10 @@
     <h2>Account settings</h2>
     <form method="post" enctype="multipart/form-data">
         <input type="hidden" name="_csrf" value="${_csrf.token}">
-        <input type="hidden" name="userId" value="${user.id}">
 
         <div class="form-group">
-            <#if user.avatar??>
-                <img src="/img/${user.avatar}">
+            <#if avatar??>
+                <img src="/img/${avatar}">
             <#else>
                 <img src="/img/default.jpg">
             </#if>
@@ -29,6 +28,13 @@
             <label class="col-sm-2 col-form-label">Password</label>
             <div class="col-sm-5">
                 <input type="password" class="form-control" name="password">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-5">
+                <input type="email" class="form-control" name="email">
             </div>
         </div>
 

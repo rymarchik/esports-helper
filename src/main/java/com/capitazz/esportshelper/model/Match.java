@@ -9,7 +9,6 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,15 +23,15 @@ import javax.persistence.OneToOne;
 public class Match {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @OneToOne
-    @JoinColumn(name = "winning_team_id", nullable = false, foreignKey = @ForeignKey(name = "winning_team_id_fkey"))
+    @JoinColumn(name = "winning_team_id", nullable = false)
     private Team winningTeam;
 
     @OneToOne
-    @JoinColumn(name = "losing_team_id", nullable = false, foreignKey = @ForeignKey(name = "losing_team_id_fkey"))
+    @JoinColumn(name = "losing_team_id", nullable = false)
     private Team losingTeam;
 
     @Column(nullable = false)
@@ -47,40 +46,65 @@ public class Match {
 
     @ElementCollection
     @CollectionTable(name = "match_player_score",
-        joinColumns = {@JoinColumn(name = "match_id", referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "match_id_fkey"))})
+        joinColumns = {@JoinColumn(name = "match_id", referencedColumnName = "id")})
     @MapKeyColumn(name = "player_name")
     @Column(name = "score", nullable = false)
     private Map<String, String> playerScore;
 
-    public Match() {
+
+    public Long getId() {
+        return id;
     }
 
-    public Integer getId() {
-        return id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Team getWinningTeam() {
         return winningTeam;
     }
 
+    public void setWinningTeam(Team winningTeam) {
+        this.winningTeam = winningTeam;
+    }
+
     public Team getLosingTeam() {
         return losingTeam;
+    }
+
+    public void setLosingTeam(Team losingTeam) {
+        this.losingTeam = losingTeam;
     }
 
     public GameMap getMap() {
         return map;
     }
 
+    public void setMap(GameMap map) {
+        this.map = map;
+    }
+
     public LocalDate getDate() {
         return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public String getMatchScore() {
         return matchScore;
     }
 
+    public void setMatchScore(String matchScore) {
+        this.matchScore = matchScore;
+    }
+
     public Map<String, String> getPlayerScore() {
         return playerScore;
+    }
+
+    public void setPlayerScore(Map<String, String> playerScore) {
+        this.playerScore = playerScore;
     }
 }

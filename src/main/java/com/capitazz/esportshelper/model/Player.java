@@ -2,7 +2,6 @@ package com.capitazz.esportshelper.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,28 +15,38 @@ import javax.persistence.ManyToOne;
 public class Player {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @Column(nullable = false)
     private String nickname;
 
     @ManyToOne
-    @JoinColumn(name = "team_id", foreignKey = @ForeignKey(name = "team_id_fkey"))
+    @JoinColumn(name = "team_id")
     private Team team;
 
-    public Player() {
+
+    public Long getId() {
+        return id;
     }
 
-    public Integer getId() {
-        return id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNickname() {
         return nickname;
     }
 
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
     public Team getTeam() {
         return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 }
