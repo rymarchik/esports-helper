@@ -12,5 +12,7 @@ import com.capitazz.esportshelper.model.security.User;
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByUsername(String username);
 
+    User findByEmail(String email);
+
     User findByActivationCode(String code);
 }

@@ -10,6 +10,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 /**
  * Класс, описывающий сущность Команда.
@@ -21,9 +24,12 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank(message = "Please fill the team name")
     @Column(nullable = false)
     private String name;
 
+    @Positive(message = "Team rank is not correct")
+    @NotNull(message = "Please fill the team rank")
     @Column(nullable = false)
     private Integer rank;
 
