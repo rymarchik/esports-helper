@@ -3,8 +3,6 @@ package com.capitazz.esportshelper.service;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.capitazz.esportshelper.model.Player;
@@ -28,7 +26,7 @@ public class PlayerService {
         return playerRepository.findAll();
     }
 
-    public Player get(Integer id) {
+    public Player get(Long id) {
         return playerRepository.findById(id)
             .orElseThrow(NoSuchElementException::new);
     }
@@ -37,7 +35,7 @@ public class PlayerService {
         return playerRepository.save(player);
     }
 
-    public void delete(Integer id) {
+    public void delete(Long id) {
         playerRepository.deleteById(id);
     }
 }

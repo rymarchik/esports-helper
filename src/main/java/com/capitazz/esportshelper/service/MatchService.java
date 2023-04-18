@@ -3,8 +3,6 @@ package com.capitazz.esportshelper.service;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.capitazz.esportshelper.model.Match;
@@ -28,7 +26,7 @@ public class MatchService {
         return matchRepository.findAll();
     }
 
-    public Match get(Integer id) {
+    public Match get(Long id) {
         return matchRepository.findById(id)
             .orElseThrow(NoSuchElementException::new);
     }
@@ -37,7 +35,7 @@ public class MatchService {
         return matchRepository.save(match);
     }
 
-    public void delete(Integer id) {
+    public void delete(Long id) {
         matchRepository.deleteById(id);
     }
 }

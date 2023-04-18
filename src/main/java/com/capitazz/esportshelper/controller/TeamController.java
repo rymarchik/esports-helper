@@ -1,7 +1,5 @@
 package com.capitazz.esportshelper.controller;
 
-import javax.validation.Valid;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.capitazz.esportshelper.model.Team;
 import com.capitazz.esportshelper.service.TeamService;
 import static com.capitazz.esportshelper.controller.ControllerUtils.getErrors;
+
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/teams")

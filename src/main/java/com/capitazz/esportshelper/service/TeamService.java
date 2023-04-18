@@ -30,7 +30,7 @@ public class TeamService {
         return teamRepository.findByNameContaining(filter);
     }
 
-    public Team get(Integer id) {
+    public Team get(Long id) {
         return teamRepository.findById(id)
             .orElseThrow(NoSuchElementException::new);
     }
@@ -39,7 +39,7 @@ public class TeamService {
         return teamRepository.save(team);
     }
 
-    public void delete(Integer id) {
+    public void delete(Long id) {
         teamRepository.deleteById(id);
     }
 }
