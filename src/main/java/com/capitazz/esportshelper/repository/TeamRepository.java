@@ -11,7 +11,7 @@ import com.capitazz.esportshelper.model.Team;
  * Репозиторий для работы с командами {@link Team}.
  */
 @Repository
-public interface TeamRepository extends JpaRepository<Team, Integer> {
+public interface TeamRepository extends JpaRepository<Team, Long> {
 
     List<Team> findByNameContaining(String filter);
 

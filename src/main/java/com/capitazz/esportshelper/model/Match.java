@@ -3,22 +3,26 @@ package com.capitazz.esportshelper.model;
 import java.time.LocalDate;
 import java.util.Map;
 
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapKeyColumn;
-import javax.persistence.OneToOne;
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapKeyColumn;
+import jakarta.persistence.OneToOne;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Класс, описывающий сущность Матч.
  */
+@Getter
+@Setter
 @Entity
 public class Match {
 
@@ -51,60 +55,4 @@ public class Match {
     @Column(name = "score", nullable = false)
     private Map<String, String> playerScore;
 
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Team getWinningTeam() {
-        return winningTeam;
-    }
-
-    public void setWinningTeam(Team winningTeam) {
-        this.winningTeam = winningTeam;
-    }
-
-    public Team getLosingTeam() {
-        return losingTeam;
-    }
-
-    public void setLosingTeam(Team losingTeam) {
-        this.losingTeam = losingTeam;
-    }
-
-    public GameMap getMap() {
-        return map;
-    }
-
-    public void setMap(GameMap map) {
-        this.map = map;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public String getMatchScore() {
-        return matchScore;
-    }
-
-    public void setMatchScore(String matchScore) {
-        this.matchScore = matchScore;
-    }
-
-    public Map<String, String> getPlayerScore() {
-        return playerScore;
-    }
-
-    public void setPlayerScore(Map<String, String> playerScore) {
-        this.playerScore = playerScore;
-    }
 }

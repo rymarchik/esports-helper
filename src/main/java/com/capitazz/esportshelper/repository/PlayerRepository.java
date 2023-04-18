@@ -9,6 +9,6 @@ import com.capitazz.esportshelper.model.Player;
  * Репозиторий для работы с игроками {@link Player}.
  */
 @Repository
-public interface PlayerRepository extends JpaRepository<Player, Integer> {
+public interface PlayerRepository extends JpaRepository<Player, Long> {
 
 }

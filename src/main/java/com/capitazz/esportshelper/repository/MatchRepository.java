@@ -9,6 +9,6 @@ import com.capitazz.esportshelper.model.Match;
  * Репозиторий для работы с матчами {@link Match}.
  */
 @Repository
-public interface MatchRepository extends JpaRepository<Match, Integer> {
+public interface MatchRepository extends JpaRepository<Match, Long> {
 
 }
